@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.background-image {
+  width: 100%;
+  height: 700px;
+}
+
+.headers {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 24px;
+  font-weight: 600;
+}
+
+.characters-button {
+  background-color: #04CD69;
+  border-radius: 16px;
+  padding: 16px;
+  border-color: white;
+}
+
+.Group-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}

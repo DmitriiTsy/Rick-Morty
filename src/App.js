@@ -1,27 +1,30 @@
-import logo from './logo.svg';
+
 import './App.css';
-
-
+import BackgroundImage from '/Users/dmitry/Desktop/Rick-Morty/rick-morty/src/content/images/background-image.jpg'
+import React, {useState} from 'react'
+import Characters from '../src/components/Characters/Characters.js';
+import './App.css'
 
 function App() {
+  const [activeCharacters, setActiveCharacters] = useState(false)
+
+  const HandlerCharacters = (event) => {
+    event.preventDefault();
+    return activeCharacters === false? setActiveCharacters(true): setActiveCharacters(false)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Testing for the first commit with this repo
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div>
+         <img src={BackgroundImage} className="background-image"></img>
+         <div className='Group-buttons'>
+          <button onClick={HandlerCharacters} className='characters-button'>CHARACTERS</button>
+          <button className='characters-button'>LOCATIONS</button>
+          <button className='characters-button'>EPISODES</button>
+        </div>
+          {activeCharacters && <Characters/>}
+      </div>
+  )
+  
 }
 
 export default App;

@@ -1,0 +1,19 @@
+.elements-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding: 70px;
+    background-color: #FFFFFF;
+}
+
+.all-wrapper {
+    border-top: 2px solid #E7EAED;
+    border-bottom: 2px solid #E7EAED;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 8px;
+}
