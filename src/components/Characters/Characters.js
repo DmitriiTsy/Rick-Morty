@@ -4,10 +4,11 @@ import './Characters.css'
 
 
 const Characters = () => {
-    const [url, setUrl] = useState('https://rickandmortyapi.com/api/character/?name=')    // Fetching charact. API
+    const [url, setUrl] = useState('https://rickandmortyapi.com/api/character/')    // Fetching charact. API
     const [info, setInfo] = useState({})                  
     const [results, setResults] =useState([])
     const [search, setSearch] =useState('')
+    const [page, setPage] = useState(1)
   
     useEffect(() => {                   //Checking some data objects (testing purposes) 
       console.log('url: ', url)
@@ -17,7 +18,7 @@ const Characters = () => {
     }, [info, url,search, results])
   
     useEffect(()=>{                     //combined url + result in input for search filter purpose
-        fetch(`${url}${search}`, {
+        fetch(`${url}?page=${page}&name=${search}`, {
           method: 'GET'
         }).then((response) => {
           return response.json()
@@ -25,12 +26,35 @@ const Characters = () => {
             setInfo(result.info)
             setResults(result.results)
         }).catch((error) => {
+            setPage(1)
             console.log(error)
         })
-    }, [search])                        //Serach as a main dependency for this 
+    }, [search, page])                       //Serach as a main dependency for this 
+
+    const HandlerBefore = (event) => {
+        event.preventDefault();
+        if (page > 1) {
+            setPage(page - 1);
+        }   else {
+            setPage(info.pages);
+        }
+    }
+
+    const HandlerAfter = (event) => {
+        event.preventDefault();
+        if (page <= info.pages) {
+            setPage(page + 1);
+        }   else {
+            setPage(1);
+        }
+    }
   
     return (
         <div className="all-wrapper">
+            <button onClick={(event) => HandlerBefore(event)}>-</button>
+            <p>{page}/{info.pages}</p>
+            <button onClick={(event) => HandlerAfter(event)}>+</button>
+
             <div>
                 <input onChange={(e) => {
                 setSearch(e.target.value)
