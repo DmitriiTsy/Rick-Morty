@@ -1,0 +1,31 @@
+.Character-wrapper__images {
+    border-radius: 10px;
+}
+
+.Character__image{
+    border-radius: 16px;
+    width: 128px;
+    height: 128px;
+}
+
+.Character-wrapper {
+    border-radius: 16px;
+    background-color:#CCCCCC;
+    padding: 8px;
+    color: black;
+}
+
+.Character-wrapper__text {
+    word-break: break-all;
+}
+
+.Character-wrapper__images{
+-webkit-transition: all 0.7s ease;
+transition: all 0.7s ease;
+}
+
+.Character-wrapper__images:hover {
+-webkit-filter: brightness(0.45);
+
+}
+
