@@ -1,6 +1,6 @@
 
 import './App.css';
-import BackgroundImage from '/Users/dmitry/Desktop/Rick-Morty/rick-morty/src/content/images/background-image.jpg'
+import BackgroundImage from './content/images/background-image.jpg'
 import React, {useState} from 'react'
 import Characters from '../src/components/Characters/Characters.js';
 import './App.css'

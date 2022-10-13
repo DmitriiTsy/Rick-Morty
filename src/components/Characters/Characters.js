@@ -5,10 +5,12 @@ import './Characters.css'
 
 const Characters = () => {
     const [url, setUrl] = useState('https://rickandmortyapi.com/api/character/')    // Fetching charact. API
-    const [info, setInfo] = useState({})                  
-    const [results, setResults] =useState([])
-    const [search, setSearch] =useState('')
-    const [page, setPage] = useState(1)
+    const [info, setInfo] = useState({});             
+    const [results, setResults] =useState([]);
+    const [search, setSearch] =useState('');
+    const [page, setPage] = useState(1);
+
+    const [error, setError] =useState(false);
   
     useEffect(() => {                   //Checking some data objects (testing purposes) 
       console.log('url: ', url)
@@ -21,10 +23,16 @@ const Characters = () => {
         fetch(`${url}?page=${page}&name=${search}`, {
           method: 'GET'
         }).then((response) => {
-          return response.json()
+            if (response.status === 404) {
+                setError(true)
+                throw new Error('Smth wrong')
+            }
+        return response.json()
         }).then((result) => {
             setInfo(result.info)
             setResults(result.results)
+
+            
         }).catch((error) => {
             setPage(1)
             console.log(error)
@@ -48,7 +56,13 @@ const Characters = () => {
             setPage(1);
         }
     }
-  
+
+    const FilteredArray = results.map((result, index) => (
+        <div className='element-wrapper'>
+            <Character props={result} index={index}/>
+        </div>
+    ))
+
     return (
         <div className="all-wrapper">
             <button onClick={(event) => HandlerBefore(event)}>-</button>
@@ -65,11 +79,7 @@ const Characters = () => {
             /> 
             </div>
             <div className='elements-wrapper'>
-            {results.map((result, index) => (
-                <div className='element-wrapper'>
-                    <Character props={result} index={index}/>
-                </div>
-            ))}
+            {FilteredArray}
             </div>
         </div>
     )
