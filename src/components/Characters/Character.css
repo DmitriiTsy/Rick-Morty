@@ -6,13 +6,13 @@
     border-radius: 16px;
     width: 128px;
     height: 128px;
+    cursor: pointer;
 }
 
 .Character-wrapper {
-    border-radius: 16px;
-    background-color:#CCCCCC;
-    padding: 8px;
+    border-radius: 8px;
     color: black;
+    width: 128px;
 }
 
 .Character-wrapper__text {
@@ -26,6 +26,69 @@ transition: all 0.7s ease;
 
 .Character-wrapper__images:hover {
 -webkit-filter: brightness(0.45);
-
 }
 
+.Character-wrapper__name {
+    font-weight: 600;
+    font-size: 18px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.Character-wrapper__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+}
+
+.Character-wrapper__species-block {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.Character-wrapper__species-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    
+}
+
+.Character-wrapper-gender {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    padding-bottom: 8px;
+}
+
+.Character-wrapper-gender__text {
+    font-weight: 600;
+}
+
+.Character-wrapper-seen {
+    padding-bottom: 8px;
+}
+
+.Character-wrapper-seen__text {
+    font-weight: 600;
+}
+
+.Character-wrapper-location__text {
+    font-weight: 600;
+    padding-top: 8px;
+}
+
+.Character-wrapper-episodes {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    padding-top: 8px;
+}
+
+.Character-wrapper-episodes__text {
+    font-weight: 600;
+}

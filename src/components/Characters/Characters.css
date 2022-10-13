@@ -3,7 +3,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 32px;
-    padding: 70px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 32px;
     background-color: #FFFFFF;
 }
 
@@ -13,7 +15,43 @@
     margin-top: 24px;
     display: flex;
     flex-direction: column;
+    padding-top: 8px;
+}
+
+.all-pages {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
     justify-content: center;
     align-items: center;
-    padding-top: 8px;
+}
+
+.all-wrapper-input {
+    padding-left: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.all-wrapper-input__filter {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.all-wrapper-input__filter-button {
+    background-color: white;
+    border: none;
+}
+
+.filter-wrapper {
+    border: 0.5px solid grey;
+    width: 256px;
+}
+
+.filter-buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }

@@ -51,10 +51,10 @@
 }
 
 .characters-button {
-  background-color: #04CD69;
-  border-radius: 16px;
+  background-color: white;
   padding: 16px;
-  border-color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .Group-buttons {
