@@ -2,6 +2,11 @@ import React, {useState, useEffect} from 'react'
 import Character from '../Characters/Character.js'
 import './Characters.css'
 import FilterIcon from '../../content/icons/filter.png'
+import ArrowLeft from '../../content/icons/arrow-left.png'
+import ArrowRight from '../../content/icons/arrow-right.png'
+import Facebook from '../../content/icons/facebook.png'
+import LinkedIn from '../../content/icons/linkedin.png'
+import Github from '../../content/icons/github.png'
 
 
 const Characters = () => {
@@ -48,7 +53,7 @@ const Characters = () => {
             setPage(1)
             console.log(error)
         })
-    }, [search, page, url, currentStatus, currentGender, currentSpecies])                       //Serach as a main dependency for this 
+    }, [search, page, url, currentStatus, currentGender, currentSpecies, error])                       //Serach as a main dependency for this 
 
     const HandlerBefore = (event) => {
         event.preventDefault();
@@ -122,6 +127,7 @@ const Characters = () => {
     }
 
     return (
+    <div>
         <div className="all-wrapper">
             <div className="all-wrapper-input">
                 <button className="all-wrapper-input__filter-button" onClick={HandlerFilter}>
@@ -132,59 +138,72 @@ const Characters = () => {
                 }}
                 value={search}
                 type='text'
-                placeholder='Enter name'
+                placeholder='Enter character name'
+                className='all-wrapper-input__text'
                 /> 
             </div>
-            <div className='elements-wrapper'>
-            {error && <div>No characters found</div>}
-            {filter && 
-            <div className='filter-wrapper'>
-                <button onClick={HandlerClean}>Clear Filters</button>
-                <div className='filter-buttons-wrapper'>
-                    <button onClick={HandlerStatus}>Status</button>
-                    {status && 
-                    <div>
-                        <button onClick={HandlerCurrentStatus} value='Alive'>Alive</button>
-                        <button onClick={HandlerCurrentStatus} value='Dead'>Dead</button>
-                        <button onClick={HandlerCurrentStatus} value='Unknown'>Unknown</button>
-                    </div>
+                {error && <div>No characters found</div>}
+                <div className='filter-elements-wrapper'>
+                    {filter && 
+                        <div className='filter-wrapper'>
+                            <button onClick={HandlerClean} className='filter-wrapper__text'>Clear Filters</button>
+                            <div className='filter-buttons-wrapper'>
+                                <button onClick={HandlerStatus} className="filter-buttons-wrapper__button">Status</button>
+                                {status && 
+                                <div className="filter-buttons-wrapper__elements">
+                                    <button onClick={HandlerCurrentStatus} value='Alive' style={currentStatus === 'Alive' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">Alive</button>
+                                    <button onClick={HandlerCurrentStatus} value='Dead' style={currentStatus === 'Dead' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">Dead</button>
+                                    <button onClick={HandlerCurrentStatus} value='Unknown' style={currentStatus === 'Unknown' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">Unknown</button>
+                                </div>
+                                }
+                                <button onClick={HandlerGender} className="filter-buttons-wrapper__button">Gender</button>
+                                {gender && 
+                                <div className="filter-buttons-wrapper__elements">
+                                    <button onClick={HandlerCurrentGender} value='female' style={currentGender === 'female' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">female</button>
+                                    <button onClick={HandlerCurrentGender} value='male' style={currentGender === 'male' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">male</button>
+                                    <button onClick={HandlerCurrentGender} value='unknown' style={currentGender === 'unknown' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">unknown</button>
+                                    <button onClick={HandlerCurrentGender} value='genderless' style={currentGender === 'genderless' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">genderless</button>
+                                </div>
+                                }
+                                <button onClick={HandlerSpecies} className="filter-buttons-wrapper__button-down">Species</button>
+                                {species && 
+                                <div className="filter-buttons-wrapper__elements">
+                                    <button onClick={HandlerCurrentSpecies} value='Human' style={currentSpecies === 'Human' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}} className="filter-buttons-wrapper__element">Human</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Alien' style={currentSpecies === 'Alien' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Alien</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Humanoid' style={currentSpecies === 'Humanoid' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Humanoid</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Poopybutthole' style={currentSpecies === 'Poopybutthole' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Poopybutthole</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Mythological' style={currentSpecies === 'Mythological' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Mythological</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Unknown' style={currentSpecies === 'Unknown' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Unknown</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Animal' style={currentSpecies === 'Animal' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Animal</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Disease' style={currentSpecies === 'Disease' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Disease</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Robot' style={currentSpecies === 'Robot' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Robot</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Cronenberg' style={currentSpecies === 'Cronenberg' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Cronenberg</button>
+                                    <button onClick={HandlerCurrentSpecies} value='Planet' style={currentSpecies === 'Planet' ? {backgroundColor: 'grey', color:'white'}:{backgroundColor: 'white', color:'grey'}}  className="filter-buttons-wrapper__element">Planet</button>
+                                </div>
+                                }
+                            </div>
+                        </div>
                     }
-                    <button onClick={HandlerGender}>Gender</button>
-                    {gender && 
-                    <div>
-                        <button onClick={HandlerCurrentGender} value='female'>female</button>
-                        <button onClick={HandlerCurrentGender} value='male'>male</button>
-                        <button onClick={HandlerCurrentGender} value='unknown'>unknown</button>
-                        <button onClick={HandlerCurrentGender} value='genderless'>genderless</button>
+                    <div className='elements-wrapper'>
+                        {FilteredArray}
                     </div>
-                    }
-                    <button onClick={HandlerSpecies}>Species</button>
-                    {species && 
-                    <div>
-                        <button onClick={HandlerCurrentSpecies} value='Human'>Human</button>
-                        <button onClick={HandlerCurrentSpecies} value='Alien'>Alien</button>
-                        <button onClick={HandlerCurrentSpecies} value='Humanoid'>Humanoid</button>
-                        <button onClick={HandlerCurrentSpecies} value='Poopybutthole'>Poopybutthole</button>
-                        <button onClick={HandlerCurrentSpecies} value='Mythological'>Mythological</button>
-                        <button onClick={HandlerCurrentSpecies} value='Unknown'>Unknown</button>
-                        <button onClick={HandlerCurrentSpecies} value='Animal'>Animal</button>
-                        <button onClick={HandlerCurrentSpecies} value='Disease'>Disease</button>
-                        <button onClick={HandlerCurrentSpecies} value='Robot'>Robot</button>
-                        <button onClick={HandlerCurrentSpecies} value='Cronenberg'>Cronenberg</button>
-                        <button onClick={HandlerCurrentSpecies} value='Planet'>Planet</button>
-                    </div>
-                    }
                 </div>
-            </div>
-            }
-            {FilteredArray}
-            </div>
-            <div className='all-pages'>
-                <button onClick={(event) => HandlerBefore(event)}>-</button>
-                <p>{page}/{info.pages}</p>
-                <button onClick={(event) => HandlerAfter(event)}>+</button>
-            </div>
+                <div className='all-pages'>
+                    <button onClick={(event) => HandlerBefore(event)} className="all-pages__arrows-button">
+                        <img src={ArrowLeft} className="all-pages__arrows"/>
+                    </button>
+                    <div className='all-pages__text'>{page}/{info.pages}</div>
+                    <button onClick={(event) => HandlerAfter(event)} className="all-pages__arrows-button">
+                        <img src={ArrowRight} className="all-pages__arrows"/>
+                    </button>
+                </div>
         </div>
+        <div className='footer'>
+            <img src={Facebook} className="footer__element"/>
+            <img src={LinkedIn} className="footer__element"/>
+            <img src={Github} className="footer__element"/>
+        </div>
+    </div>
     )
 }
 
