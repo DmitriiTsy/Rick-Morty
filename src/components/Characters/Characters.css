@@ -158,6 +158,11 @@ body, html {
     padding: 8px;
 }
 
+.filter-buttons-wrapper__selected {
+    color: white;
+    background-color: grey;
+}
+
 .footer__element {
     width: 32px;
     height: 32px;

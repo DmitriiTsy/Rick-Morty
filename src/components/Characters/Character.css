@@ -1,47 +1,55 @@
-.Character-wrapper__images {
+.character-wrapper__images {
     border-radius: 10px;
 }
 
-.Character__image{
+.character__image{
     border-radius: 8px;
     width: 128px;
     height: 128px;
     cursor: pointer;
 }
 
-.Character-wrapper {
+.character-wrapper {
     border-radius: 8px;
     color: black;
     width: 128px;
 }
 
-.Character-wrapper__text {
+.character-wrapper__text {
     word-break: break-all;
 }
 
-.Character-wrapper__images{
+.character-wrapper__images{
 -webkit-transition: all 0.7s ease;
 transition: all 0.7s ease;
 }
 
-.Character-wrapper__images:hover {
+.character-wrapper__images:hover {
 -webkit-filter: brightness(0.45);
 }
 
-.Character-wrapper__name {
+.character-wrapper__name {
     font-weight: 600;
     font-size: 18px;
     padding-top: 16px;
     padding-bottom: 16px;
 }
 
-.Character-wrapper__indicator {
+.character-wrapper__indicator {
     width: 8px;
     height: 8px;
     border-radius: 8px;
+    background-color: red;
 }
 
-.Character-wrapper__species-block {
+.character-wrapper__indicator-selected {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background-color: green;
+}
+
+.character-wrapper__species-block {
     display: flex;
     flex-direction: row;
     gap: 8px;
@@ -49,7 +57,7 @@ transition: all 0.7s ease;
     flex-wrap: wrap;
 }
 
-.Character-wrapper__species-wrapper {
+.character-wrapper__species-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -58,37 +66,37 @@ transition: all 0.7s ease;
     
 }
 
-.Character-wrapper-gender {
+.character-wrapper-gender {
     display: flex;
     flex-direction: row;
     gap: 4px;
     padding-bottom: 8px;
 }
 
-.Character-wrapper-gender__text {
+.character-wrapper-gender__text {
     font-weight: 600;
 }
 
-.Character-wrapper-seen {
+.character-wrapper-seen {
     padding-bottom: 8px;
 }
 
-.Character-wrapper-seen__text {
+.character-wrapper-seen__text {
     font-weight: 600;
 }
 
-.Character-wrapper-location__text {
+.character-wrapper-location__text {
     font-weight: 600;
     padding-top: 8px;
 }
 
-.Character-wrapper-episodes {
+.character-wrapper-episodes {
     display: flex;
     flex-direction: row;
     gap: 4px;
     padding-top: 8px;
 }
 
-.Character-wrapper-episodes__text {
+.character-wrapper-episodes__text {
     font-weight: 600;
 }

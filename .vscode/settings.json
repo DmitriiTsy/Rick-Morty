@@ -1,0 +1,10 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "eslint.validate": ["javascript"]
+
+      "rules": {
+        "react/jsx-filename-extension": [1, { "allow": "as-needed" }]
+      }
+}
