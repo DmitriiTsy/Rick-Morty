@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import BackgroundImage from './content/images/background-image.jpg';
 import BigImage from './content/images/big-image.png';
 import Characters from './components/Characters/Characters';
-import 'normalize.css';
 
 function App() {
   const [activeCharacters, setActiveCharacters] = useState(false);

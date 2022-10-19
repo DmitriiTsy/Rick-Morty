@@ -10,6 +10,8 @@ import Github from '../../content/icons/github.png';
 
 import Filter from '../Filter/Filter';
 
+
+
 function Characters() {
   const [url, setUrl] = useState('https://rickandmortyapi.com/api/character/'); // Fetching charact. API
   const [info, setInfo] = useState({});
@@ -33,13 +35,6 @@ function Characters() {
   const getSearchValue = (value) => {
     setSearch(value);
   };
-
-  useEffect(() => { // Checking some data objects (testing purposes)
-    console.log('url: ', url);
-    console.log('info: ', info);
-    console.log('results', results);
-    console.log('search: ', search);
-  }, [info, url, search, results]);
 
   useEffect(() => {
     const controller = new AbortController(); // combined url + result in input for
