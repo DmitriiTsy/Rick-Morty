@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/jsx-filename-extension */
 import './App.css';
 import React, { useState } from 'react';
 import BackgroundImage from './content/images/background-image.jpg';

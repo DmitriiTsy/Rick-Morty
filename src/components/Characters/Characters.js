@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/button-has-type */
+import React, { useState, useEffect, useReducer } from 'react';
 import Character from './Character';
 import './Characters.css';
 import FilterIcon from '../../content/icons/filter.png';
@@ -7,54 +11,75 @@ import ArrowRight from '../../content/icons/arrow-right.png';
 import Facebook from '../../content/icons/facebook.png';
 import LinkedIn from '../../content/icons/linkedin.png';
 import Github from '../../content/icons/github.png';
-
 import Filter from '../Filter/Filter';
 
-// const ACTIONS = {
-//   INFO: 'info',
-//   RESULTS: 'results',
-//   SEARCH: 'search',
-//   PAGE: 'page',
-//   FILTER: 'filter',
-// };
+const initialState = {
+  info: {},
+  results: [],
+  search: '',
+  page: '1',
+  filter: false,
+  error: false,
+  url: 'https://rickandmortyapi.com/api/character/',
+};
 
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case ACTIONS.INFO:
-//       return { info: action.payload };
-//     case ACTIONS.RESULTS:
-//       return { results: action.payload };
-//     case ACTIONS.SEARCH:
-//       return { search: action.payload };
-//     case ACTIONS.PAGE:
-//       return { page: action.payload };
-//     case ACTIONS.FILTER:
-//       return { filter: action.payload };
-//     default:
-//       return state;
-//   }
-// }
+const ACTIONS = {
+  INFO: 'info',
+  RESULTS: 'results',
+  SEARCH: 'search',
+  PAGE: 'page',
+  FILTER: 'filter',
+  ERROR: 'error',
+  URL: 'url',
+};
 
-// const initialState = {
-//   info: {},
-//   results: [],
-//   search: '',
-//   page: '1',
-//   filter: false,
-// };
+function reducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.INFO:
+      return {
+        ...state,
+        info: action.payload,
+      };
+    case ACTIONS.RESULTS:
+      return {
+        ...state,
+        results: action.payload,
+      };
+    case ACTIONS.SEARCH:
+      return {
+        ...state,
+        search: action.payload,
+      };
+    case ACTIONS.PAGE:
+      return {
+        ...state,
+        page: action.payload,
+      };
+    case ACTIONS.FILTER:
+      return {
+        ...state,
+        filter: action.payload,
+      };
+    case ACTIONS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case ACTIONS.URL:
+      return {
+        ...state,
+        url: action.payload,
+      };
+    default:
+      return state;
+  }
+}
 
 function Characters() {
-  const [url, setUrl] = useState('https://rickandmortyapi.com/api/character/'); // Fetching charact. API
-  // const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [info, setInfo] = useState({});
-  const [results, setResults] = useState([]);
-  const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
-
-  const [filter, setFilter] = useState(false);
-
-  const [errors, setErrors] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    info, results, search, page, filter, error, url,
+  } = state;
   const [addition, setAddition] = useState('');
 
   const getDataValue = (value) => {
@@ -62,12 +87,11 @@ function Characters() {
   };
 
   const getErrorValue = (value) => {
-    setErrors(value);
+    dispatch({ type: ACTIONS.ERROR, payload: value });
   };
 
   const getSearchValue = (value) => {
-    setSearch(value);
-    // dispatch({ type: ACTIONS.SEARCH, payload: value });
+    dispatch({ type: ACTIONS.SEARCH, payload: value });
   };
 
   useEffect(() => {
@@ -76,43 +100,36 @@ function Characters() {
       method: 'GET',
     }).then((response) => {
       if (response.status === 404) {
-        setErrors(true);
+        dispatch({ type: ACTIONS.ERROR, payload: true });
         throw new Error('Smth wrong');
       }
       return response.json();
     }).then((result) => {
-      // dispatch({ type: ACTIONS.INFO, payload: result.info });
-      // dispatch({ type: ACTIONS.RESULTS, payload: result.results });
-      setInfo(result.info);
-      setResults(result.results);
+      dispatch({ type: ACTIONS.INFO, payload: result.info });
+      dispatch({ type: ACTIONS.RESULTS, payload: result.results });
     }).catch((error) => {
-      // dispatch({ type: ACTIONS.PAGE, payload: { page: 1 } });
-      setPage(1);
+      dispatch({ type: ACTIONS.PAGE, payload: 1 });
     });
     return () => {
       controller.abort();
     };
-  }, [search, page, url, addition, errors]); // Serach as a main dependency for this
+  }, [search, error, page, url, addition]);
 
   const handlerPreviousPage = (event) => {
     event.preventDefault();
     if (page > 1) {
-      // dispatch({ type: ACTIONS.PAGE, payload: state.page - 1 });
-      setPage(page - 1);
+      dispatch({ type: ACTIONS.PAGE, payload: state.page - 1 });
     } else {
-      // dispatch({ type: ACTIONS.PAGE, payload: state.info.pages });
-      setPage(info.pages);
+      dispatch({ type: ACTIONS.PAGE, payload: state.info.pages });
     }
   };
 
   const handlerNextPage = (event) => {
     event.preventDefault();
     if (page <= info.pages) {
-      // dispatch({ type: ACTIONS.PAGE, payload: state.page + 1 });
-      setPage(page + 1);
+      dispatch({ type: ACTIONS.PAGE, payload: state.page + 1 });
     } else {
-      // dispatch({ type: ACTIONS.PAGE, payload: 1 });
-      setPage(1);
+      dispatch({ type: ACTIONS.PAGE, payload: 1 });
     }
   };
 
@@ -124,8 +141,8 @@ function Characters() {
 
   const handlerOpenFilter = (event) => {
     event.preventDefault();
-    return filter === false ? setFilter(true) : setFilter(false)
-    // : dispatch({ type: ACTIONS.FILTER, payload: false });
+    return filter === false ? dispatch({ type: ACTIONS.FILTER, payload: true })
+      : dispatch({ type: ACTIONS.FILTER, payload: false });
   };
 
   return (
@@ -137,8 +154,7 @@ function Characters() {
           </button>
           <input
             onChange={(e) => {
-              // dispatch({ type: ACTIONS.SEARCH, payload: e.target.value });
-              setSearch(e.target.value);
+              dispatch({ type: ACTIONS.SEARCH, payload: e.target.value });
             }}
             value={search}
             type="text"
@@ -146,7 +162,7 @@ function Characters() {
             className="all-wrapper-input__text"
           />
         </div>
-        {errors && <div>No characters found</div>}
+        {error && <div>No characters found</div>}
         <div className="filter-elements-wrapper">
           {filter && (
           <Filter

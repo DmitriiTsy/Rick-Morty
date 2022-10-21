@@ -2,7 +2,7 @@
     border-radius: 10px;
 }
 
-.character__image{
+.character__image {
     border-radius: 8px;
     width: 128px;
     height: 128px;
@@ -19,7 +19,7 @@
     word-break: break-all;
 }
 
-.character-wrapper__images{
+.character-wrapper__images {
 -webkit-transition: all 0.7s ease;
 transition: all 0.7s ease;
 }

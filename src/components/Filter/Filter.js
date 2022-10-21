@@ -1,4 +1,13 @@
-import React, { useState, useEffect, useReducer } from 'react';
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
+import React, { useReducer } from 'react';
+import useFilter from '../hooks/useFilter';
 
 const initialState = {
   status: false,
@@ -7,7 +16,7 @@ const initialState = {
   currentStatus: '',
   currentGender: '',
   currentSpecies: '',
-}
+};
 
 const ACTIONS = {
   STATUS: 'status',
@@ -16,123 +25,106 @@ const ACTIONS = {
   CURRENT_STATUS: 'current-status',
   CURRENT_GENDER: 'current-gender',
   CURRENT_SPECIES: 'current-species',
-}
+};
 
 function reducer(state, action) {
-  switch(action.type) {
+  switch (action.type) {
     case ACTIONS.STATUS: {
       return {
-        status: action.payload
-      }
+        ...state,
+        status: action.payload,
+      };
     }
     case ACTIONS.GENDER: {
       return {
-        gender: action.payload
-      }
+        ...state,
+        gender: action.payload,
+      };
     }
     case ACTIONS.SPECIES: {
       return {
-        species: action.payload
-      }
+        ...state,
+        species: action.payload,
+      };
     }
     case ACTIONS.CURRENT_STATUS: {
       return {
-        currentStatus: action.payload
-      }
+        ...state,
+        currentStatus: action.payload,
+      };
     }
     case ACTIONS.CURRENT_GENDER: {
       return {
-        currentGender: action.payload
-      }
+        ...state,
+        currentGender: action.payload,
+      };
     }
     case ACTIONS.CURRENT_SPECIES: {
       return {
-        currentSpecies: action.payload
-      }
+        ...state,
+        currentSpecies: action.payload,
+      };
     }
-    default: 
-      return initialState
+    default:
+      return state;
   }
 }
 
 function Filter(props) {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  // const [status, setStatus] = useState(false); // States to open additional filters
-  // const [gender, setGender] = useState(false);
-  // const [species, setSpecies] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    status, gender, species, currentGender, currentSpecies, currentStatus,
+  } = state;
+  const { getErrorValue, getSearchValue, getDataValue } = props;
 
-  // const [currentStatus, setCurrentStatus] = useState(''); // States with value
-  // const [currentGender, setCurrentGender] = useState('');
-  // const [currentSpecies, setCurrentSpecies] = useState('');
-
-  const { status, gender, species, currentGender, currentSpecies, currentStatus } = state
-
-  const [addition, setAddition] = useState('');
-
-  useEffect(() => {
-    setAddition(`&status=${currentStatus}&gender=${currentGender}&species=${currentSpecies}`);
-  }, [currentGender, currentSpecies, currentStatus]);
-
+  const addition = useFilter(currentGender, currentSpecies, currentStatus);
 
   const handlerStatus = (event) => {
     event.preventDefault();
-    return status === false ? dispatch({ type: ACTIONS.STATUS, payload: true }) 
-    : dispatch({ type: ACTIONS.STATUS, payload: false })
-    
-    // setStatus(true) : setStatus(false);
+    return status === false ? dispatch({ type: ACTIONS.STATUS, payload: true })
+      : dispatch({ type: ACTIONS.STATUS, payload: false });
   };
 
   const handlerSpecies = (event) => {
     event.preventDefault();
-    return species === false ? dispatch({ type: ACTIONS.SPECIES, payload: true }) 
-    : dispatch({ type: ACTIONS.SPECIES, payload: false })
-    // return species === false ? setSpecies(true) : setSpecies(false);
+    return species === false ? dispatch({ type: ACTIONS.SPECIES, payload: true })
+      : dispatch({ type: ACTIONS.SPECIES, payload: false });
   };
 
   const handlerGender = (event) => {
     event.preventDefault();
-    return gender === false ? dispatch({ type: ACTIONS.GENDER, payload: true }) 
-    : dispatch({ type: ACTIONS.GENDER, payload: false })
-    // return gender === false ? setGender(true) : setGender(false);
+    return gender === false ? dispatch({ type: ACTIONS.GENDER, payload: true })
+      : dispatch({ type: ACTIONS.GENDER, payload: false });
   };
 
   const handlerCurrentStatus = (event) => {
     event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: event.target.id }) 
-    // setCurrentStatus(event.target.id);
+    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: event.target.id });
   };
 
   const handlerCurrentSpecies = (event) => {
     event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: event.target.id }) 
-    // setCurrentSpecies(event.target.id);
+    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: event.target.id });
   };
 
   const handlerCurrentGender = (event) => {
     event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: event.target.id }) 
-    // setCurrentGender(event.target.id);
+    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: event.target.id });
   };
-  console.log(addition)
-  props.getDataValue(addition);
 
   const handlerClean = (event) => {
-    props.getErrorValue(false);
-    props.getSearchValue('');
+    getErrorValue(false);
+    getSearchValue('');
     event.preventDefault();
-    dispatch({ type: ACTIONS.STATUS, payload: false })
-    dispatch({ type: ACTIONS.SPECIES, payload: false })
-    dispatch({ type: ACTIONS.GENDER, payload: false })
-    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: '' })
-    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: '' })
-    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: '' })
-    // setStatus(false);
-    // setSpecies(false);
-    // setGender(false);
-    // setCurrentStatus('');
-    // setCurrentGender('');
-    // setCurrentSpecies('');
+    dispatch({ type: ACTIONS.STATUS, payload: false });
+    dispatch({ type: ACTIONS.SPECIES, payload: false });
+    dispatch({ type: ACTIONS.GENDER, payload: false });
+    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: '' });
+    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: '' });
+    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: '' });
   };
+
+  getDataValue(addition);
 
   return (
     <div className="filter-wrapper">
