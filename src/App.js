@@ -1,30 +1,33 @@
-
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/jsx-filename-extension */
 import './App.css';
-import BackgroundImage from '/Users/dmitry/Desktop/Rick-Morty/rick-morty/src/content/images/background-image.jpg'
-import React, {useState} from 'react'
-import Characters from '../src/components/Characters/Characters.js';
-import './App.css'
+import React, { useState } from 'react';
+import BackgroundImage from './content/images/background-image.jpg';
+import BigImage from './content/images/big-image.png';
+import Characters from './components/Characters/Characters';
 
 function App() {
-  const [activeCharacters, setActiveCharacters] = useState(false)
+  const [activeCharacters, setActiveCharacters] = useState(false);
+  const [activeLocations, setActiveLocations] = useState(false);
+  const [activeEpisodes, setActiveEpisodes] = useState(false);
 
-  const HandlerCharacters = (event) => {
+  const handlerOpenCharacters = (event) => {
     event.preventDefault();
-    return activeCharacters === false? setActiveCharacters(true): setActiveCharacters(false)
-  }
+    return activeCharacters === false ? setActiveCharacters(true) : setActiveCharacters(false);
+  };
 
   return (
-      <div>
-         <img src={BackgroundImage} className="background-image"></img>
-         <div className='Group-buttons'>
-          <button onClick={HandlerCharacters} className='characters-button'>CHARACTERS</button>
-          <button className='characters-button'>LOCATIONS</button>
-          <button className='characters-button'>EPISODES</button>
-        </div>
-          {activeCharacters && <Characters/>}
+    <div className="main-container">
+      <img src={BigImage} srcSet={`${BigImage} 300w, ${BackgroundImage} 1280w`} className="background-image" alt="background" />
+      <div className="group-buttons">
+        <button onClick={handlerOpenCharacters} className={`characters-button ${activeCharacters && 'characters-button__selected'}`}>CHARACTERS</button>
+        <button className={`characters-button ${activeLocations && 'characters-button__selected'}`}>LOCATIONS</button>
+        <button className={`characters-button ${activeEpisodes && 'characters-button__selected'}`}>EPISODES</button>
       </div>
-  )
-  
+      {activeCharacters && <Characters />}
+    </div>
+  );
 }
 
 export default App;
