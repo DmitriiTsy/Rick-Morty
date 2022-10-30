@@ -6,131 +6,47 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 
-import React, { useReducer } from 'react';
-import useFilter from '../hooks/useFilter';
-
-const initialState = {
-  status: false,
-  gender: false,
-  species: false,
-  currentStatus: '',
-  currentGender: '',
-  currentSpecies: '',
-};
-
-const ACTIONS = {
-  STATUS: 'status',
-  GENDER: 'gender',
-  SPECIES: 'species',
-  CURRENT_STATUS: 'current-status',
-  CURRENT_GENDER: 'current-gender',
-  CURRENT_SPECIES: 'current-species',
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.STATUS: {
-      return {
-        ...state,
-        status: action.payload,
-      };
-    }
-    case ACTIONS.GENDER: {
-      return {
-        ...state,
-        gender: action.payload,
-      };
-    }
-    case ACTIONS.SPECIES: {
-      return {
-        ...state,
-        species: action.payload,
-      };
-    }
-    case ACTIONS.CURRENT_STATUS: {
-      return {
-        ...state,
-        currentStatus: action.payload,
-      };
-    }
-    case ACTIONS.CURRENT_GENDER: {
-      return {
-        ...state,
-        currentGender: action.payload,
-      };
-    }
-    case ACTIONS.CURRENT_SPECIES: {
-      return {
-        ...state,
-        currentSpecies: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-}
+import React from 'react';
+import useFilter from './useFilter';
+import useLink from './useLink';
 
 function Filter(props) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    status, gender, species, currentGender, currentSpecies, currentStatus,
-  } = state;
-  const { getErrorValue, getSearchValue, getDataValue } = props;
+  const { getUrlText } = props;
 
-  const addition = useFilter(currentGender, currentSpecies, currentStatus);
+  const [
+    handlerCurrentStatus,
+    handlerCurrentSpecies,
+    handlerCurrentGender,
+    currentStatus,
+    currentSpecies,
+    currentGender,
+    handlerStatus,
+    handlerSpecies,
+    handlerGender,
+    status,
+    species,
+    gender,
+    handlerClean,
+  ] = useFilter({ props });
 
-  const handlerStatus = (event) => {
-    event.preventDefault();
-    return status === false ? dispatch({ type: ACTIONS.STATUS, payload: true })
-      : dispatch({ type: ACTIONS.STATUS, payload: false });
-  };
+  const addition = useLink(
+    currentGender,
+    currentSpecies,
+    currentStatus,
+  );
 
-  const handlerSpecies = (event) => {
-    event.preventDefault();
-    return species === false ? dispatch({ type: ACTIONS.SPECIES, payload: true })
-      : dispatch({ type: ACTIONS.SPECIES, payload: false });
-  };
-
-  const handlerGender = (event) => {
-    event.preventDefault();
-    return gender === false ? dispatch({ type: ACTIONS.GENDER, payload: true })
-      : dispatch({ type: ACTIONS.GENDER, payload: false });
-  };
-
-  const handlerCurrentStatus = (event) => {
-    event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: event.target.id });
-  };
-
-  const handlerCurrentSpecies = (event) => {
-    event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: event.target.id });
-  };
-
-  const handlerCurrentGender = (event) => {
-    event.preventDefault();
-    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: event.target.id });
-  };
-
-  const handlerClean = (event) => {
-    getErrorValue(false);
-    getSearchValue('');
-    event.preventDefault();
-    dispatch({ type: ACTIONS.STATUS, payload: false });
-    dispatch({ type: ACTIONS.SPECIES, payload: false });
-    dispatch({ type: ACTIONS.GENDER, payload: false });
-    dispatch({ type: ACTIONS.CURRENT_STATUS, payload: '' });
-    dispatch({ type: ACTIONS.CURRENT_SPECIES, payload: '' });
-    dispatch({ type: ACTIONS.CURRENT_GENDER, payload: '' });
-  };
-
-  getDataValue(addition);
+  getUrlText(addition);
 
   return (
     <div className="filter-wrapper">
       <button onClick={handlerClean} className="filter-wrapper__text">Clear Filters</button>
       <div className="filter-buttons-wrapper">
-        <button onClick={handlerStatus} className="filter-buttons-wrapper__button">Status</button>
+        <button
+          onClick={handlerStatus}
+          className="filter-buttons-wrapper__button"
+        >
+          Status
+        </button>
         {status
                 && (
                 <div className="filter-buttons-wrapper__elements">

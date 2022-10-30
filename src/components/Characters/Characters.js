@@ -11,7 +11,7 @@ import ArrowRight from '../../content/icons/arrow-right.png';
 import Facebook from '../../content/icons/facebook.png';
 import LinkedIn from '../../content/icons/linkedin.png';
 import Github from '../../content/icons/github.png';
-import Filter from '../Filter/Filter';
+import Filter from '../hooks/Filter';
 
 const initialState = {
   info: {},
@@ -82,7 +82,7 @@ function Characters() {
   } = state;
   const [addition, setAddition] = useState('');
 
-  const getDataValue = (value) => {
+  const getUrlText = (value) => {
     setAddition(value);
   };
 
@@ -166,7 +166,7 @@ function Characters() {
         <div className="filter-elements-wrapper">
           {filter && (
           <Filter
-            getDataValue={getDataValue}
+            getUrlText={getUrlText}
             getErrorValue={getErrorValue}
             getSearchValue={getSearchValue}
           />
